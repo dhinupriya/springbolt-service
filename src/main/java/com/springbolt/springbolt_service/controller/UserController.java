@@ -1,7 +1,9 @@
 package com.springbolt.springbolt_service.controller;
 
 import com.springbolt.springbolt_service.model.MongoUser;
+import com.springbolt.springbolt_service.model.Post;
 import com.springbolt.springbolt_service.model.User;
+import com.springbolt.springbolt_service.service.RestTemplateService;
 import com.springbolt.springbolt_service.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +22,12 @@ import java.util.Optional;
 public class UserController {
 
     private UserService userService;
+    private RestTemplateService restTemplateService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService,RestTemplateService restTemplateService){
         this.userService=userService;
+        this.restTemplateService=restTemplateService;
     }
 
     @PostMapping("/save")
@@ -41,4 +45,11 @@ public class UserController {
 
         return userService.getAllMongoUsers();
     }
+
+    @GetMapping("/Posts/{id}")
+    public Post getPostById(@PathVariable  int id){
+        return restTemplateService.getRestTemplatePostById(id);
+    }
+
+
 }
