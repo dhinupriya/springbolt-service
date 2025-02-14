@@ -56,6 +56,28 @@ services:
     networks:
       - my_network
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - my_network
+    depends_on:
+      - app
+
+  grafana:
+      image: grafana/grafana
+      container_name: grafana
+      ports:
+        - "3000:3000"
+      networks:
+        - my_network
+      depends_on:
+        - prometheus
+
   app:
     build: .
     container_name: springboot-microservices
@@ -79,4 +101,6 @@ services:
 
 networks:
   my_network:
+    driver: bridge
+  monitoring:  # ✅ Added missing monitoring network definition
     driver: bridge
