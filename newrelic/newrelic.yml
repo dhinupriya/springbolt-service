@@ -1,0 +1,4 @@
+common: &default_settings
+  app_name: SpringBoltService
+  license_key: '<your_actual_newrelic_license_key>'
+  agent_enabled: true
