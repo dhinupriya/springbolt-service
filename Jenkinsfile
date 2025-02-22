@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/dhinupriya/springbolt-service.git'  // Replace with your Git repo
+               git branch: 'main', url: 'https://github.com/dhinupriya/springbolt-service.git'
             }
         }
         stage('Build with Maven') {
@@ -17,7 +17,7 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build Docker Image') {  // ✅ Moved outside correctly
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
             }
@@ -39,5 +39,5 @@ pipeline {
                 sh 'docker rmi $DOCKER_IMAGE'
             }
         }
-    }
-}
+    } // ✅ Closing 'stages' block
+} // ✅ Closing 'pipeline' block
