@@ -90,11 +90,6 @@
 			<artifactId>newrelic-api</artifactId>
 			<version>8.3.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.newrelic.logging</groupId>
-			<artifactId>logback</artifactId>
-			<version>3.3.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>
