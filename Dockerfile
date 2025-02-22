@@ -10,8 +10,6 @@ WORKDIR /app
 #RUN curl -fsSL -o /app/newrelic/newrelic-agent-8.18.0.jar https://download.newrelic.com/newrelic/java-agent/newrelic-agent/8.18.0/newrelic-agent-8.18.0.jar && \
 #    chmod 755 /app/newrelic/newrelic-agent-8.18.0.jar
 
-# Copy Logback configuration from the `logback/` directory
-COPY ./logback/logback.xml /app/logback.xml
 
 # Copy the application JAR
 COPY target/springbolt-service-0.0.1-SNAPSHOT.jar app.jar
