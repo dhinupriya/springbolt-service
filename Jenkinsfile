@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    triggers {
+            githubPush()  // ✅ Automatically triggers build on GitHub push
+        }
     environment {
         DOCKER_IMAGE = "dhinu1127/springbolt_myapp"
     }
