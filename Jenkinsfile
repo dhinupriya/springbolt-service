@@ -48,5 +48,5 @@ pipeline {
                 sh '/usr/local/bin/docker rmi $DOCKER_IMAGE'
             }
         }
-    }   // ✅ Closing 'stages' block
-}   // ✅ Closing 'pipeline' block
+    } // ✅ Closing 'stages' block
+} // ✅ Closing 'pipeline' block
