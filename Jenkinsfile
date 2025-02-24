@@ -1,8 +1,8 @@
 pipeline {
     agent any
     triggers {
-            githubPush()  // ✅ Automatically triggers build on GitHub push
-        }
+        githubPush()  // ✅ Automatically triggers build on GitHub push
+    }
     environment {
         DOCKER_IMAGE = "dhinu1127/springbolt_myapp"
     }
@@ -20,26 +20,32 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('Check Docker') {
+            steps {
+                sh 'echo "Running as: $(whoami)"'
+                sh '/usr/local/bin/docker ps'
+            }
+        }
         stage('Build Docker Image') {  // ✅ Moved outside correctly
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
+                sh "/usr/local/bin/docker build -t ${env.DOCKER_IMAGE} ."
             }
         }
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'echo $DOCKER_PASS | /usr/local/bin/docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
-                sh 'docker push $DOCKER_IMAGE'
+                sh '/usr/local/bin/docker push $DOCKER_IMAGE'
             }
         }
         stage('Clean up Docker') {
             steps {
-                sh 'docker rmi $DOCKER_IMAGE'
+                sh '/usr/local/bin/docker rmi $DOCKER_IMAGE'
             }
         }
     } // ✅ Closing 'stages' block
